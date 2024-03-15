@@ -1,0 +1,33 @@
+$DESKTOP: "DESKTOP";
+$MEDIUM-DEVICE: "MEDIUM-DEVICE";
+$TABLET-DEVICE: "TABLET-DEVICE";
+$WIDE-MOBILE: "WIDE-MOBILE";
+$SMALL-DEVICE: "SMALL-DEVICE";
+
+@mixin Responsive($canvas) {
+    @if ($canvas) == $DESKTOP {
+        @media only screen and (min-width: 1200px){
+            @content;
+        }
+    }
+    @else if $canvas == $MEDIUM-DEVICE {
+        @media only screen and (min-width: 992px) and (max-width: 1199px) {
+            @content;
+        }
+    }
+    @else if $canvas == $TABLET-DEVICE{
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            @content;
+        }
+    }
+    @else if $canvas == $WIDE-MOBILE {
+        @media only screen and (max-width: 767px) {
+            @content;
+        }
+    }
+    @else if $canvas == $SMALL-DEVICE {
+        @media only screen and (max-width: 575px) {
+            @content;
+        }
+    }
+}
