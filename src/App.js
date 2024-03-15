@@ -72,6 +72,9 @@ class Menu extends Component {
           Date: "2024-03-11",
         },
       ],
+      activePage: 1,
+      itemsCountPerPage: 20,
+      totalItemsCount: 450,
       sort: {
         column: null,
         direction: "asc",
@@ -123,7 +126,6 @@ class Menu extends Component {
   };
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({ activePage: pageNumber });
   }
 
@@ -296,6 +298,10 @@ class Menu extends Component {
     const { sort } = this.state;
     const { filteredData, searchData } = this.state;
     const dataToRender = searchData ? filteredData : this.state.data;
+    const { activePage, itemsCountPerPage, totalItemsCount } = this.state;
+    const startIndex = (activePage - 1) * itemsCountPerPage;
+    const endIndex = Math.min(startIndex + itemsCountPerPage, totalItemsCount);
+    const currentData = dataToRender.slice(startIndex, endIndex);
 
     return (
       <>
@@ -691,7 +697,7 @@ class Menu extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataToRender.map((item) => (
+                  {currentData.map((item) => (
                     <tr key={item.id}>
                       <td>{item.Folio}</td>
                       <td>{item.Conf}</td>
@@ -710,9 +716,9 @@ class Menu extends Component {
             </div>
             <div>
               <Pagination
-                activePage={this.state.activePage}
-                itemsCountPerPage={10}
-                totalItemsCount={45}
+                activePage={activePage}
+                itemsCountPerPage={itemsCountPerPage}
+                totalItemsCount={totalItemsCount}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange.bind(this)}
               />
